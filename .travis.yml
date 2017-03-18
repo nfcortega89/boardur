@@ -1,0 +1,9 @@
+language: node_js
+node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: V+a/gmpOMH6/4cawDFzY+YzzgpTkqO6alNfrlnMRB38GEZ+HvOQibVqnhVk7kf+5GAM0xPN52Myru6ETsKFVkAY4KGbr5LiBYbFL90D/U84U8lm4/P/uOivMMjeJO6P6n26IJ9UgMbmPu24+SqWcp6JB9t4dMdcAZ3dv7USVcbeaHR7xL+o+A4H/LHF6jc+a6YEeU3Ll/Eth9jWNWkHVmqgO1Lih+0rkcEyn9nDQeRvG0PNkvuJfL9Agj7CXmLoQfVrduvhyEmRzBueksIBNnvXoiEF/y/NtohVbHqosr9NEfXNNnLEK9Dlf888D3+xch8hnHEguXeVAEOsFY26nhwA/5MuvA9PmaTQu/6KOC1e85dGSwqjP0fFJyiIyFpCn0yI04G07pFH/ssRTg8YQ6zmQqkYHHwzbruQihg535EOyIqMq/xDevT1grnrbSSSC64AcIVP0zusXAr/TLkjS9TCNuAqq3TbUhfQ6jTCj44hLx1vpR48NBOV4wD0QmjiMbCfVDJwIIOTDvWUvug8y/Fkl17NBCZj2mjeDEPItXD6w9IaD2mx3q5wxU3YQ4MBa4HPFPdP2g9UJl00yQYysbTrWbDNwJgVsAAioRBHeSOe+MFKwLjD4MB/3WGHJcCzuO0jJQKmRHO4pzoONuk8Y/8Y3xgA6A5tt2BEW+u6ByNY=
+  app: young-hamlet-95314
+  on:
+    repo: nfcortega89/boardur
