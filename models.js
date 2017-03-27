@@ -5,7 +5,7 @@ const categorySchema = mongoose.Schema({
   users: [{
     userId: {type:String, required: true},
     images: [{
-      title: {type: String, required: true},
+      imageTitle: {type: String, required: true},
       imageUrl: {type:String, required:true},
       stats: {
         upvotes: Number,
