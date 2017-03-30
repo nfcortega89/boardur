@@ -11,6 +11,7 @@ const {PORT, DATABASE_URL} = require('./config');
 const {Category} = require('./models');
 
 const app = express();
+app.use(bodyParser.json());
 // app.use(morgan('common'))
 app.use(express.static('public'))
 
@@ -43,22 +44,23 @@ app.get('/categories/:id', (req, res) => {
 })
 
 app.post('/categories', (req, res) => {
-
-  const requiredFields = ['title', 'users']
-  for(let i=0; i<requiredFields.length;i++){
+  console.log(req.body)
+  const requiredFields = ['title']
+  for(let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
+
     if (!(field in req.body)) {
-      const message = `Missing \`${field}\` in request body`
+      const message = `Missing ${field} in request body`
       console.error(message);
       return res.status(400).send(message);
     }
   }
+  const toUpdate = {};
   Category
   .create({
     title: req.body.title,
-    userId: req.body.userId,
-    imageTitle: req.body.imageTitle,
-    imageUrl: req.body.imageUrl})
+    users: []
+  })
   .then(
     category => res.status(201).json({category})
   )
@@ -93,7 +95,7 @@ app.put('/categories/:id', (req, res) => {
     });
 });
 
-app.delete('./categories/:id', (req, res) => {
+app.delete('/categories/:id', (req, res) => {
   Category
   .findByIdAndRemove(req.params.id)
   .exec()
