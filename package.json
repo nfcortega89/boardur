@@ -2,7 +2,7 @@
   "name": "trendr",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "./server",
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
@@ -16,7 +16,7 @@
     "mocha": "^3.2.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node ./server/index.js",
     "test": "mocha"
   },
   "author": "Nikko Ortega",
