@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 const { ObjectId } = Schema.Types
 
 var userSchema = mongoose.Schema({
+  //_id: Object(a79yd87h2r87h847y23h),
   userId: String,
   category: {
     type: ObjectId,

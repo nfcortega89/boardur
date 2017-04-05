@@ -51,9 +51,7 @@ router.post('/', (req, res) => {
     title: req.body.title,
     users: []
   })
-  .then(
-    category => res.status(201).json({category})
-  )
+  .then(category => res.status(201).json({category}))
   .catch(err => {
       console.error(err);
       res.status(500).json({message: 'Internal server error'});
@@ -68,7 +66,7 @@ router.put('/:id', (req, res) => {
       `Request path id (${req.params.id}) and request body id ` +
       `(${req.body.id}) must match`);
       console.error(message);
-      res.status(400).json({message: message});
+      return res.status(400).json({message: message});
   }
   const toUpdate = {};
   const updateableFields = ['title']
@@ -94,7 +92,7 @@ router.delete('/:id', (req, res) => {
       `Request path id (${req.params.id}) and request body id ` +
       `(${req.body.id}) must match`);
       console.error(message);
-      res.status(400).json({message: message});
+      return res.status(400).json({message: message});
   }
   Category
     .findByIdAndRemove(req.params.id)

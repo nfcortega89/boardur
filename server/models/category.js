@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const ImageSchema = require('./image')
 const Schema = mongoose.Schema
 const { ObjectId } = Schema.Types
 
@@ -8,6 +7,10 @@ const categorySchema = new Schema({
   users: [{
     type: ObjectId,
     ref: 'user'
+  }],
+  images: [{
+    type: ObjectId,
+    ref: 'image'
   }]
 })
 

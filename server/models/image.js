@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema
+const StatsSchema = require('./stats')
 const { ObjectId } = Schema.Types
 
 var imageSchema = new Schema({
-  imageTitle: String,
-  imageUrl: String,
+  title: String,
+  url: String,
   user: {
     type: ObjectId,
     ref: 'user'
@@ -13,10 +14,7 @@ var imageSchema = new Schema({
     type: ObjectId,
     ref: 'category'
   },
-  stats: {
-    type: ObjectId,
-    ref: 'stats'
-  },
+  stats: StatsSchema,
   isFeatured: Boolean
 });
 

@@ -1,12 +1,14 @@
 const express = require('express');
 const categoryRouter = require('./api/categories')
 const userRouter = require('./api/users')
+const imageRouter = require('./api/images')
 const mongoose = require('mongoose');
 const {PORT, DATABASE_URL} = require('./config');
 
 const app = express();
 app.use('/categories', categoryRouter)
 app.use('/users', userRouter)
+app.use('/images', imageRouter)
 
 let server;
 
