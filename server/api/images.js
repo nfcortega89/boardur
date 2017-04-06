@@ -19,12 +19,19 @@ router.get('/', (req, res) => {
   })
   .catch(err => {
     console.error(err);
-    res.status(500).json({ message: 'Internal Server Error'});
+    res.status(500).json({ message: 'Internal server error'});
   });
 })
 
 /** GET BY ID **/
-
+router.get('/:id', (req, res) => {
+  Image.findById(req.params.id)
+  .then(image => {res.json({image})})
+  .catch(err => {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error'})
+  })
+})
 
 /** DELETE **/
 router.delete('/:id', (req, res) => {
@@ -42,6 +49,5 @@ router.delete('/:id', (req, res) => {
     res.status(500).json({ message: 'Internal server error'});
   });
 })
-
 
 module.exports = router

@@ -25,9 +25,17 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   User.findById(req.params.id)
-  .then(user => {
-    res.json({user})
-  })
+  .populate('images')
+  .then(user => res.json({user}))
+  .catch(err => {
+    console.error(err);
+      res.status(500).json({ message: 'Internal server error'})
+  });
+})
+
+router.get('/images/:id', (req, res) => {
+  Image.findById(req.params.id)
+  .then(image => {res.json({image})})
   .catch(err => {
     console.error(err);
       res.status(500).json({ message: 'Internal server error'})
@@ -36,7 +44,7 @@ router.get('/:id', (req, res) => {
 /** POST **/
 
 router.post('/', (req, res) => {
-  const requiredFields = ['userId', 'category']
+  const requiredFields = ['instagramId', 'category']
   for(let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
 
@@ -47,25 +55,13 @@ router.post('/', (req, res) => {
     }
   }
 
-  let newUser
-  let categoryToUpdate
-  Category
-    .findOne({ title: req.body.category })
-    .then(category => {
-      categoryToUpdate = category
-      newUser = new User({
-        userId: req.body.userId,
-        images: []
-      })
-      newUser.category = category
-      return newUser.save()
-    })
-    .then(() => Category.findById(categoryToUpdate._id))
-    .then(category => {
-      category.users.push(newUser)
-      return category.save()
-    })
-    .then(category => res.status(201).json(category))
+  newUser = new User({
+    instagramId: req.body.instagramId,
+    images: [],
+    category: req.body.category
+  })
+  newUser.save() //see middleware
+    .then(user => res.status(201).json(user))
     .catch(err => {
        console.error(err);
        res.status(500).json({message: 'Internal server error', Error: err});
@@ -99,26 +95,15 @@ router.post('/images', (req,res) => {
         },
         isFeatured: false
       })
-      user.images.push(newImage)
-
-      Category.findById(user.category)
-        .then(category => {
-          category.images.push(newImage)
-          return Promise.all([user.save(), newImage.save(), category.save()])
-        })
-        .then((promises) => {
-          res.status(201).json(promises[1])
-        })
-        .catch(err => {
-          res.status(400).json({message: 'Image failed to save', Error: err})
-        });
+      return newImage.save()
     })
-  // if that user is available continue store userId locally
-  // else return error
-  // identify category and return categoryId & store locally
-  // create image instance with title, url, user, category with fresh stats obj
-  // isFeatured === false
-  // lastly save()
+    .then((image) => {
+      res.status(201).json(image)
+    })
+    .catch(err => {
+      res.status(400).json({message: 'Image failed to save', Error: err})
+    });
+
 });
 
 /** PUT **/
@@ -157,7 +142,7 @@ router.delete('/:id', (req, res) => {
       console.error(message);
       return res.status(400).json({message: message});
   }
-  User.findByIdAndRemove(req.params.id)
+  User.findByIdAndRemove(req.params.id) // go to middleware
   .then(() => res.status(204).end())
   .catch(err => {
     console.error(err);
@@ -165,6 +150,6 @@ router.delete('/:id', (req, res) => {
   });
 })
 
-/** IMAGE DELETE **/
+
 
 module.exports = router
