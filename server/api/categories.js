@@ -1,12 +1,12 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const express = require('express')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
 const router = express.Router()
-const {Category} = require('../models/category');
+const Category = require('../models/category')
 
-mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise
 
-router.use(bodyParser.json());
+router.use(bodyParser.json())
 
 /** GET **/
 
@@ -16,9 +16,9 @@ router.get('/', (req, res) => {
     res.json({categories})
   })
   .catch(err => {
-      console.error(err);
-        res.status(500).json({message: 'Internal server error'})
-    });
+    console.error(err)
+    res.status(500).json({message: 'Internal server error'})
+  })
 })
 
 router.get('/:id', (req, res) => {
@@ -27,23 +27,22 @@ router.get('/:id', (req, res) => {
     res.json({category})
   })
   .catch(err => {
-      console.error(err);
-        res.status(500).json({message: 'Internal server error'})
-    });
+    console.error(err)
+    res.status(500).json({message: 'Internal server error'})
+  })
 })
 
 /** POST **/
 
 router.post('/', (req, res) => {
-  console.log(req.body)
   const requiredFields = ['title']
-  for(let i = 0; i < requiredFields.length; i++) {
-    const field = requiredFields[i];
+  for (let i = 0; i < requiredFields.length; i++) {
+    const field = requiredFields[i]
 
     if (!(field in req.body)) {
       const message = `Missing ${field} in request body`
-      console.error(message);
-      return res.status(400).send(message);
+      console.error(message)
+      return res.status(400).send(message)
     }
   }
   Category
@@ -53,54 +52,55 @@ router.post('/', (req, res) => {
   })
   .then(category => res.status(201).json({category}))
   .catch(err => {
-      console.error(err);
-      res.status(500).json({message: 'Internal server error'});
-    });
-});
+    console.error(err)
+    res.status(500).json({message: 'Internal server error'})
+  })
+})
 
 /** PUT **/
 
 router.put('/:id', (req, res) => {
-  if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
     const message = (
       `Request path id (${req.params.id}) and request body id ` +
-      `(${req.body.id}) must match`);
-      console.error(message);
-      return res.status(400).json({message: message});
+      `(${req.body.id}) must match`)
+    console.error(message)
+    return res.status(400).json({message: message})
   }
-  const toUpdate = {};
+  const toUpdate = {}
   const updateableFields = ['title']
   updateableFields.forEach(field => {
-    if(field in req.body) {
-      toUpdate[field] = req.body[field];
+    if (field in req.body) {
+      toUpdate[field] = req.body[field]
     }
-  });
+  })
   Category
   .findByIdAndUpdate(req.params.id, {$set: toUpdate})
   .then(category => res.status(201).json(category))
   .catch(err => {
-      console.error(err);
-      res.status(500).json({message: 'Internal server error'});
-    });
-});
+    console.error(err)
+    res.status(500).json({message: 'Internal server error'})
+  })
+})
 
 /** DELETE **/
 
 router.delete('/:id', (req, res) => {
-  if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
     const message = (
       `Request path id (${req.params.id}) and request body id ` +
-      `(${req.body.id}) must match`);
-      console.error(message);
-      return res.status(400).json({message: message});
+      `(${req.body.id}) must match`)
+    console.error(message)
+    return res.status(400).json({message: message})
   }
   Category
-    .findByIdAndRemove(req.params.id)
+    .findById(req.params.id)
+    .then(category => category.remove())
     .then(() => res.status(204).end())
     .catch(err => {
-        console.error(err);
-        res.status(500).json({message: 'Internal server error'});
-      });
+      console.error(err)
+      res.status(500).json({message: 'Internal server error'})
+    })
 })
 
 module.exports = router
