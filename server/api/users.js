@@ -12,7 +12,7 @@ router.use(bodyParser.json())
 router.get('/', (req, res) => {
   User.find({})
   .then(users => {
-    res.json(users)
+    res.json({users})
   })
   .catch(err => {
     console.error(err)
@@ -67,7 +67,7 @@ router.put('/:id', (req, res) => {
     return res.status(400).json({message: message})
   }
   const toUpdate = {}
-  const updateableFields = ['userId', 'category']
+  const updateableFields = ['instagramId', 'category']
   updateableFields.forEach(field => {
     if (field in req.body) {
       toUpdate[field] = req.body[field]

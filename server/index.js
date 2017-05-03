@@ -6,9 +6,9 @@ const mongoose = require('mongoose')
 const {PORT, DATABASE_URL} = require('./config')
 
 const app = express()
-app.use('/categories', categoryRouter)
-app.use('/users', userRouter)
-app.use('/images', imageRouter)
+app.use('/api/categories', categoryRouter)
+app.use('/api/users', userRouter)
+app.use('/api/images', imageRouter)
 
 let server
 
