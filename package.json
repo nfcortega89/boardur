@@ -26,7 +26,8 @@
   },
   "scripts": {
     "start": "node ./server/index.js",
-    "test": "nodemon --exec 'mocha ./test --recursive'",
+    "test": "mocha ./test --recursive",
+    "test:dev": "nodemon --exec 'mocha ./test --recursive'",
     "lint": "eslint ./server"
   },
   "author": "Nikko Ortega",
