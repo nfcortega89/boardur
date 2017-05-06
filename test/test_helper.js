@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
 before((done) => {
-  mongoose.connect('mongodb://localhost/trendr_test')
+  mongoose.connect(process.env.DATABASE_URL_TEST || 'mongodb://localhost/trendr-test')
   mongoose.connection
     .once('open', () => { done() })
     .on('error', (error) => {
