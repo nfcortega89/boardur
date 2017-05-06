@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
+const {DATABASE_URL_TEST} = require('../server/config')
 
 before((done) => {
-  mongoose.connect(process.env.DATABASE_URL_TEST || 'mongodb://localhost/trendr-test')
+  mongoose.connect(DATABASE_URL_TEST)
   mongoose.connection
     .once('open', () => { done() })
     .on('error', (error) => {
