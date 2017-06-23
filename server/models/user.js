@@ -12,7 +12,8 @@ var UserSchema = mongoose.Schema({
   images: [{
     type: ObjectId,
     ref: 'image'
-  }]
+  }],
+  googleId: String
 })
 
 UserSchema.pre('save', function (next) {

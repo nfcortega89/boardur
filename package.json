@@ -4,12 +4,22 @@
   "description": "",
   "main": "./server",
   "dependencies": {
-    "body-parser": "^1.17.1",
+    "axios": "^0.16.2",
+    "babel": "^6.23.0",
+    "body-parser": "^1.17.2",
+    "cheerio": "^0.22.0",
     "cors": "^2.8.3",
-    "express": "^4.15.2",
-    "mongodb": "^2.2.25",
-    "mongoose": "^4.9.6",
-    "morgan": "^1.8.1",
+    "express": "^4.15.3",
+    "lodash": "^4.17.4",
+    "mongodb": "^2.2.28",
+    "mongoose": "^4.10.4",
+    "morgan": "^1.8.2",
+    "node-horseman": "^3.3.0",
+    "passport": "^0.3.2",
+    "passport-google-oauth": "^1.0.0",
+    "passport-google-oauth20": "^1.0.0",
+    "phantomjs-prebuilt": "^2.1.14",
+    "redux-thunk": "^2.2.0",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
@@ -18,12 +28,12 @@
     "chai-http": "^3.0.0",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-mocha": "^4.9.0",
     "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
-    "mocha": "^3.2.0"
+    "mocha": "^3.4.2"
   },
   "scripts": {
     "start": "node ./server/index.js",

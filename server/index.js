@@ -2,6 +2,7 @@ const express = require('express')
 const categoryRouter = require('./api/categories')
 const userRouter = require('./api/users')
 const imageRouter = require('./api/images')
+const authRouter = require('./api/auth')
 const mongoose = require('mongoose')
 const {PORT, DATABASE_URL} = require('./config')
 const cors = require('cors')
@@ -11,6 +12,7 @@ app.use(cors())
 app.use('/api/categories', categoryRouter)
 app.use('/api/users', userRouter)
 app.use('/api/images', imageRouter)
+
 
 let server
 

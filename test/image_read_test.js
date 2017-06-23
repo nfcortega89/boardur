@@ -42,4 +42,12 @@ describe('Reading images', () => {
       })
       .catch(err => done(err))
   })
+  it('should fetch all images by category', (done) => {
+    Image.find({ category })
+      .then((images) => {
+        images.length.should.be.gt(0)
+        done()
+      })
+      .catch(err => done(err))
+  })
 })
