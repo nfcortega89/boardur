@@ -47,8 +47,7 @@ router.post('/', (req, res) => {
   }
   Category
   .create({
-    title: req.body.title,
-    users: []
+    title: req.body.title
   })
   .then(category => res.status(201).json({category}))
   .catch(err => {

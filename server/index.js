@@ -2,21 +2,20 @@ const express = require('express')
 const categoryRouter = require('./api/categories')
 const userRouter = require('./api/users')
 const imageRouter = require('./api/images')
-const authRouter = require('./api/auth')
+// const authRouter = require('./api/auth')
 const mongoose = require('mongoose')
 const {PORT, DATABASE_URL} = require('./config')
 const cors = require('cors')
 
 const app = express()
 app.use(cors())
+// app.use('/api', authRouter)
 app.use('/api/categories', categoryRouter)
 app.use('/api/users', userRouter)
 app.use('/api/images', imageRouter)
 
-
 let server
 
-// this function connects to our database, then starts the server
 function runServer (databaseUrl = DATABASE_URL, port = PORT) {
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
@@ -34,9 +33,6 @@ function runServer (databaseUrl = DATABASE_URL, port = PORT) {
     })
   })
 }
-
-// this function closes the server, and returns a promise. we'll
-// use it in our integration tests later.
 function closeServer () {
   return mongoose.disconnect().then(() => {
     return new Promise((resolve, reject) => {
