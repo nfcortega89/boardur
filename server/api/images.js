@@ -16,6 +16,7 @@ router.use(bodyParser.json())
 router.get('/', (req, res) => {
   function findImages(query = {}) {
     Image.find(query)
+    .sort({ "score" : -1 })
     .then(images => res.json({images}))
     .catch(err => {
       console.error(err)
@@ -25,7 +26,7 @@ router.get('/', (req, res) => {
   function findFeatured(query = {}) {
     console.log('find featured', query)
     Image.find(query)
-    .sort({ "upvotes" : -1 })
+    .sort({ "score" : -1 })
     .limit(1)
     .then(images => res.json(images[0]))
     .catch(err => {
@@ -90,6 +91,7 @@ router.post('/post-instagram', (req, res) => {
 })
 
 router.post('/upvote', (req, res) => {
+  console.log(req.body)
   const requiredFields = ['userId', 'imageId']
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i]

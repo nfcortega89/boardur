@@ -21,6 +21,10 @@ var ImageSchema = new Schema({
   createdAt: Date
 })
 
+ImageSchema.virtual('score', function () {
+  return this.upvotes - this.downvotes
+})
+
 ImageSchema.pre('save', function (next) {
   this.createdAt = Date.now()
 
