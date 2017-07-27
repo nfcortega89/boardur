@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const { ObjectId } = Schema.Types
 
-var ImageSchema = new Schema({
+const ImageSchema = new Schema({
   title: String,
   url: String,
   category: {
@@ -18,11 +18,11 @@ var ImageSchema = new Schema({
     type: ObjectId,
     ref: 'user'
   }],
-  createdAt: Date
-})
-
-ImageSchema.virtual('score', function () {
-  return this.upvotes - this.downvotes
+  createdAt: Date,
+  score: {
+    type: Number,
+    default: 0
+  }
 })
 
 ImageSchema.pre('save', function (next) {

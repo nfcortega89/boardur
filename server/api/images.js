@@ -16,7 +16,7 @@ router.use(bodyParser.json())
 router.get('/', (req, res) => {
   function findImages(query = {}) {
     Image.find(query)
-    .sort({ "score" : -1 })
+    .sort({ score: -1 })
     .then(images => res.json({images}))
     .catch(err => {
       console.error(err)
@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
   function findFeatured(query = {}) {
     console.log('find featured', query)
     Image.find(query)
-    .sort({ "score" : -1 })
+    .sort({ score: -1 })
     .limit(1)
     .then(images => res.json(images[0]))
     .catch(err => {
@@ -91,7 +91,6 @@ router.post('/post-instagram', (req, res) => {
 })
 
 router.post('/upvote', (req, res) => {
-  console.log(req.body)
   const requiredFields = ['userId', 'imageId']
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i]
@@ -107,7 +106,11 @@ router.post('/upvote', (req, res) => {
       $addToSet: { upvotes: req.body.userId },
       $unset: { downvotes: req.body.userId }
     }, { new: true })
-    .then(image => res.status(200).json(image))
+    .then(image => {
+      image.set({ score: image.upvotes.length - image.downvotes.length })
+      return image.save()
+    })
+    .then(image => { res.status(200).json(image) })
     .catch(err => {
       console.error(err)
       res.status(500).json({message: 'Internal server error'})
@@ -130,6 +133,10 @@ router.post('/downvote', (req, res) => {
         $addToSet: { downvotes: req.body.userId } ,
         $unset: { upvotes: req.body.userId } ,
       }, { new: true })
+    .then(image => {
+      image.set({ score: image.upvotes.length - image.downvotes.length })
+      return image.save()
+    })
     .then(image => res.status(200).json(image))
     .catch(err => {
       console.error(err)
